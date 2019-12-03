@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mp-tabbar": "../components/tabBar/tabBar"
+  },
+  "navigationBarTitleText": "商品"
+}

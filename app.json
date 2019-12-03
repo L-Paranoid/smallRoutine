@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/Merchandise/Merchandise",
+    "components/tabBar/tabBar"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+    "tabBar": {
+      "custom": true,
+      "color": "#000000",
+      "selectedColor": "#000000",
+      "backgroundColor": "#000000",
+      "list": [
+        {
+          "pagePath": "components/tabBar/tabBar",
+          "text": "组件"
+        },
+        {
+          "pagePath": "components/tabBar/tabBar",
+          "text": "接口"
+        }
+      ]
+    },
+    "usingComponents": {},
+  "debug": true,
+  "navigateToMiniProgramAppIdList": [
+    "wxe5f52902cf4de896"
+  ],
+  "style": "v2"
+}
