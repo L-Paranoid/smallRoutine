@@ -6,7 +6,8 @@
     "components/tabBar/tabBar",
     "pages/catalog/catalog",
     "pages/cart/cart",
-    "pages/ucenter/ucenter"
+    "pages/ucenter/ucenter",
+    "pages/search/search"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -50,9 +51,7 @@
       }
     ]
   },
-  "usingComponents": {
-    
-  },
+  "usingComponents": {},
   "debug": true,
   "navigateToMiniProgramAppIdList": [
     "wxe5f52902cf4de896"
