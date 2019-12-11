@@ -44,8 +44,9 @@
 
 .m-menu .item {
   flex: 1;
-  display: block;
-  padding: 20rpx 0;
+  display: inline-block;
+  padding: 22rpx 0;
+  width: 20%;
 }
 
 .m-menu image {
