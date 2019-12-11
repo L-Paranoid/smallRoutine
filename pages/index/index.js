@@ -8,7 +8,11 @@ Page({
    */
   data: {
     banner:[],
-    channel:[]
+    channel:[],
+    channerlImg: [
+        {img: '../../static/images/shinshopshuichanhaixian.png'}, {img: '../../static/images/pangxie.png'},{img:'../../static/images/beilei.png'},{img: '../../static/images/kaorou.png'}, {img:'../../static/images/shengxian-xianhaixian.png'}
+    ]
+      
   },
   onShareAppMessage: function () {
     return {
@@ -21,10 +25,14 @@ Page({
     var _this = this;
     utils.request(api.IndexUrl).then(function(res){
       if(res.data.errno == 0){
-        console.log(res.data.data.channel);
         _this.setData({
           banner:res.data.data.banner,
-          channel: res.data.data.channel
+          channel: res.data.data.channel,
+          'channel[0].icon_url':_this.data.channerlImg[0].img,
+          'channel[1].icon_url': _this.data.channerlImg[1].img,
+          'channel[2].icon_url': _this.data.channerlImg[2].img,
+          'channel[3].icon_url': _this.data.channerlImg[3].img,
+          'channel[4].icon_url': _this.data.channerlImg[4].img
         })
       }
     })
