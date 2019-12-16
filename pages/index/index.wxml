@@ -18,4 +18,13 @@
       <text>{{item.name}}</text>
     </navigator>
   </view>
+  <view class='selectMenu'>
+    <view  wx:for="{{selectMenu}}" wx:key="{{item.id}}" class=
+    "{{item.id == 'all'?'active':'unactive'}}">
+      <text data-value="{{item.id}}" >{{item.title}}</text>
+    </view>
+  </view>
+  <view class='products'>
+
+  </view>
 </view>
