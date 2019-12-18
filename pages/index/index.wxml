@@ -25,6 +25,19 @@
     </view>
   </view>
   <view class='products'>
-
+    <scroll-view>
+      <view data-id='{{categoryList.id}}' class='title'> 
+        <text>{{categoryList.name}}</text>
+      </view>
+      <view class='productsList'>
+        <block wx:for="{{categoryList.goodsList}}" wx:key="{{item.id}}" >
+            <navigator url="../goods/goods?id={{item.id}}" class='item'>
+              <image class="img" src="{{item.list_pic_url}}" background-size="cover"></image>
+              <view class="name">{{item.name}}</view>
+              <view class="price">￥{{item.retail_price}}</view>
+          </navigator>
+        </block>
+      </view>
+    </scroll-view>
   </view>
 </view>

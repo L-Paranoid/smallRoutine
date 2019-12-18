@@ -84,3 +84,68 @@
 .selectMenu .active text{
   color: #fff;
 }
+
+.products {
+  width: 750rpx;
+  height: auto;
+  overflow: hidden;
+  background: #fff;
+  margin-top: 20rpx;
+}
+
+.products .title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  height: 130rpx;
+  font-size: 33rpx;
+  color: #333;
+}
+
+.products .productsList {
+  width: 750rpx;
+  height: auto;
+  overflow: hidden;
+  padding: 0 20rpx;
+}
+
+.products .productsList .item {
+  display: block;
+  float: left;
+  width: 345rpx;
+  margin-bottom: 30rpx;
+  height: auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+.products .productsList .item:nth-child(2n + 1) {
+  margin-right: 20rpx;
+}
+
+.products .item .img {
+  width: 345rpx;
+  height: 345rpx;
+  background: #f8f8f8;
+  margin-bottom: 10rpx;
+}
+
+.products .item .name {
+  width: 100%;
+  overflow: hidden;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.products .item .price {
+  width: 100%;
+  height: 46rpx;
+  line-height: 46rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #b4282d;
+}

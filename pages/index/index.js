@@ -12,8 +12,8 @@ Page({
     channerlImg: [
         {img: '../../static/images/shinshopshuichanhaixian.png'}, {img: '../../static/images/pangxie.png'},{img:'../../static/images/beilei.png'},{img: '../../static/images/kaorou.png'}, {img:'../../static/images/shengxian-xianhaixian.png'}
     ],
+    categoryList:[],
     selectMenu: [{ id: 'all', title: '全部' }, { id: 'newProducts', title: '新品' }, { id: 'choiceness', title: '精选' }, { id: 'seasons', title: '应季海鲜' },]
-      
   },
   onShareAppMessage: function () {
     return {
@@ -29,6 +29,7 @@ Page({
         _this.setData({
           banner:res.data.data.banner,
           channel: res.data.data.channel,
+          categoryList: res.data.data.categoryList[0],
           'channel[0].icon_url':_this.data.channerlImg[0].img,
           'channel[1].icon_url': _this.data.channerlImg[1].img,
           'channel[2].icon_url': _this.data.channerlImg[2].img,
