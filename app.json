@@ -8,7 +8,7 @@
     "pages/cart/cart",
     "pages/ucenter/ucenter",
     "pages/search/search",
-    "pages/channel/channel"
+    "pages/category/category"
   ],
   "window": {
     "backgroundTextStyle": "light",
