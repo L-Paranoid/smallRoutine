@@ -30,6 +30,11 @@ Page({
           banner:res.data.data.banner,
           channel: res.data.data.channel,
           categoryList: res.data.data.categoryList[0],
+          'channel[0].id': '1005000',
+          'channel[1].id': '1005001',
+          'channel[2].id': '1005002',
+          'channel[3].id': '1005003',
+          'channel[4].id': '1005004',
           'channel[0].icon_url':_this.data.channerlImg[0].img,
           'channel[1].icon_url': _this.data.channerlImg[1].img,
           'channel[2].icon_url': _this.data.channerlImg[2].img,
@@ -38,6 +43,9 @@ Page({
         })
       }
     })
+  },
+  channelClick:function(event){
+
   },
   /**
    * 生命周期函数--监听页面加载
