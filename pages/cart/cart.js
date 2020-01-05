@@ -1,66 +1,281 @@
-// pages/cart/cart.js
+var util = require('../../utils/util.js');
+var api = require('../../config/linkApi.js');
+
+var app = getApp();
+
 Page({
+    data: {
+        cartGoods: [],
+        cartTotal: {
+            "goodsCount": 0,
+            "goodsAmount": 0.00,
+            "checkedGoodsCount": 0,
+            "checkedGoodsAmount": 0.00
+        },
+        isEditCart: false,
+        checkedAllStatus: true,
+        editCartList: []
+    },
+    onLoad: function(options) {
+        // 页面初始化 options为页面跳转所带来的参数
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
 
-  },
+    },
+    onReady: function() {
+        // 页面渲染完成
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+    },
+    onShow: function() {
+        // 页面显示
+        this.getCartList();
+    },
+    onHide: function() {
+        // 页面隐藏
 
-  },
+    },
+    onUnload: function() {
+        // 页面关闭
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+    },
+    getCartList: function() {
+        let _this = this;
+        util.request(api.CartList).then(function(res) {
+            if (res.data.errno === 0) {
+                console.log(res.data);
+                _this.setData({
+                  cartGoods: res.data.data.cartList,
+                  cartTotal: res.data.data.cartTotal
+                });
+            }
 
-  },
+            _this.setData({
+                checkedAllStatus: _this.isCheckedAll()
+            });
+        });
+    },
+    isCheckedAll: function() {
+        //判断购物车商品已全选
+        return this.data.cartGoods.every(function(element, index, array) {
+            if (element.checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    },
+    checkedItem: function(event) {
+        let itemIndex = event.target.dataset.itemIndex;
+        let _this = this;
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+        if (!this.data.isEditCart) {
+            util.request(api.CartChecked, { productIds: _this.data.cartGoods[itemIndex].product_id, isChecked: _this.data.cartGoods[itemIndex].checked ? 0 : 1 }, 'POST').then(function(res) {
+                if (res.data.errno === 0) {
+                    console.log(res.data);
+                    _this.setData({
+                      cartGoods: res.data.data.cartList,
+                      cartTotal: res.data.data.cartTotal
+                    });
+                }
 
-  },
+                _this.setData({
+                    checkedAllStatus: _this.isCheckedAll()
+                });
+            });
+        } else {
+            //编辑状态
+            let tmpCartData = this.data.cartGoods.map(function(element, index, array) {
+                if (index == itemIndex) {
+                    element.checked = !element.checked;
+                }
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
+                return element;
+            });
 
-  },
+            _this.setData({
+                cartGoods: tmpCartData,
+                checkedAllStatus: _this.isCheckedAll(),
+                'cartTotal.checkedGoodsCount': _this.getCheckedGoodsCount()
+            });
+        }
+    },
+    getCheckedGoodsCount: function() {
+        let checkedGoodsCount = 0;
+        this.data.cartGoods.forEach(function(v) {
+            if (v.checked === true) {
+                checkedGoodsCount += v.number;
+            }
+        });
+        console.log(checkedGoodsCount);
+        return checkedGoodsCount;
+    },
+    checkedAll: function() {
+        let _this = this;
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+        if (!this.data.isEditCart) {
+            var productIds = this.data.cartGoods.map(function(v) {
+                return v.product_id;
+            });
+            util.request(api.CartChecked, { productIds: productIds.join(','), isChecked: _this.isCheckedAll() ? 0 : 1 }, 'POST').then(function(res) {
+                if (res.data.errno === 0) {
+                    console.log(res.data);
+                    _this.setData({
+                        cartGoods: res.data.cartList,
+                        cartTotal: res.data.cartTotal
+                    });
+                }
 
-  },
+                _this.setData({
+                    checkedAllStatus: _this.isCheckedAll()
+                });
+            });
+        } else {
+            //编辑状态
+            let checkedAllStatus = _this.isCheckedAll();
+            let tmpCartData = this.data.cartGoods.map(function(v) {
+                v.checked = !checkedAllStatus;
+                return v;
+            });
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+            _this.setData({
+                cartGoods: tmpCartData,
+                checkedAllStatus: _this.isCheckedAll(),
+                'cartTotal.checkedGoodsCount': _this.getCheckedGoodsCount()
+            });
+        }
 
-  },
+    },
+    editCart: function() {
+        var _this = this;
+        if (this.data.isEditCart) {
+            this.getCartList();
+            this.setData({
+                isEditCart: !this.data.isEditCart
+            });
+        } else {
+            //编辑状态
+            let tmpCartList = this.data.cartGoods.map(function(v) {
+                v.checked = false;
+                return v;
+            });
+            this.setData({
+                editCartList: this.data.cartGoods,
+                cartGoods: tmpCartList,
+                isEditCart: !this.data.isEditCart,
+                checkedAllStatus: _this.isCheckedAll(),
+                'cartTotal.checkedGoodsCount': _this.getCheckedGoodsCount()
+            });
+        }
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
+    },
+    updateCart: function(productId, goodsId, number, id) {
+        let _this = this;
 
-  },
+        util.request(api.CartUpdate, {
+            productId: productId,
+            goodsId: goodsId,
+            number: number,
+            id: id
+        }, 'POST').then(function(res) {
+            if (res.data.errno === 0) {
+                console.log(res.data);
+                _this.setData({
+                    //cartGoods: res.data.cartList,
+                    //cartTotal: res.data.cartTotal
+                });
+            }
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+            _this.setData({
+                checkedAllStatus: _this.isCheckedAll()
+            });
+        });
 
-  }
+    },
+    cutNumber: function(event) {
+
+        let itemIndex = event.target.dataset.itemIndex;
+        let cartItem = this.data.cartGoods[itemIndex];
+        let number = (cartItem.number - 1 > 1) ? cartItem.number - 1 : 1;
+        cartItem.number = number;
+        this.setData({
+            cartGoods: this.data.cartGoods
+        });
+        this.updateCart(cartItem.product_id, cartItem.goods_id, number, cartItem.id);
+    },
+    addNumber: function(event) {
+        let itemIndex = event.target.dataset.itemIndex;
+        let cartItem = this.data.cartGoods[itemIndex];
+        let number = cartItem.number + 1;
+        cartItem.number = number;
+        this.setData({
+            cartGoods: this.data.cartGoods
+        });
+        this.updateCart(cartItem.product_id, cartItem.goods_id, number, cartItem.id);
+
+    },
+    checkoutOrder: function() {
+        //获取已选择的商品
+        let _this = this;
+
+        var checkedGoods = this.data.cartGoods.filter(function(element, index, array) {
+            if (element.checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        if (checkedGoods.length <= 0) {
+            return false;
+        }
+
+
+        wx.navigateTo({
+            url: '../shopping/checkout/checkout'
+        })
+    },
+    deleteCart: function() {
+        //获取已选择的商品
+        let _this = this;
+
+        let productIds = this.data.cartGoods.filter(function(element, index, array) {
+            if (element.checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        if (productIds.length <= 0) {
+            return false;
+        }
+
+        productIds = productIds.map(function(element, index, array) {
+            if (element.checked == true) {
+                return element.product_id;
+            }
+        });
+
+
+        util.request(api.CartDelete, {
+            productIds: productIds.join(',')
+        }, 'POST').then(function(res) {
+            if (res.data.errno === 0) {
+                console.log(res.data);
+                let cartList = res.data.cartList.map(v => {
+                    console.log(v);
+                    v.checked = false;
+                    return v;
+                });
+
+                _this.setData({
+                    cartGoods: cartList,
+                    cartTotal: res.data.cartTotal
+                });
+            }
+
+            _this.setData({
+                checkedAllStatus: _this.isCheckedAll()
+            });
+        });
+    }
 })

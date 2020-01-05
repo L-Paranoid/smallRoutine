@@ -6,9 +6,10 @@
     "components/tabBar/tabBar",
     "pages/catalog/catalog",
     "pages/cart/cart",
-    "pages/ucenter/ucenter",
+    "pages/ucenter/index/index",
     "pages/search/search",
-    "pages/category/category"
+    "pages/category/category",
+    "pages/goods/goods"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -39,7 +40,7 @@
         "text": "购物车"
       },
       {
-        "pagePath": "pages/ucenter/ucenter",
+        "pagePath": "pages/ucenter/index/index",
         "iconPath": "static/images/ic_menu_me_nor.png",
         "selectedIconPath": "static/images/ic_menu_me_pressed.png",
         "text": "我的"
