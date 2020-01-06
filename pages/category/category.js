@@ -7,20 +7,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentCategory:[],
-    
+    id:0,//储存分类ID
+    menu: [{ id: '1005000', name: '鱼类', icon_url: '../../static/images/shinshopshuichanhaixian.png' }, { id: '1005001', name: '虾类', icon_url: '../../static/images/pangxie.png' }, { id: '1005002', name: '贝类', icon_url: '../../static/images/beilei.png' }, { id: '1005003', name: '鲜肉', icon_url: '../../static/images/kaorou.png' }, { id: '1005004', name: '冰鲜', icon_url: '../../static/images/shengxian-xianhaixian.png"' }], // 请求全部分类
+    currentCategory:[], //储存商品
   },
   //请求页面商品数据
   getIndexData:function(id){
     var _this = this;
+    _this.setData({
+      id:id
+    })
     utils.request(api.CatalogCurrent,{'id':id}).then(function (res) {
       if (res.data.errno == 0) {
-        _this.setDate({
+        _this.setData({
           currentCategory: res.data.data.currentCategory.subCategoryList,
         })
       }
     })
   },
+  getMenuData:function(){
+
+  },
+  switchCate:function(event){
+    var _this = this;
+    this.getIndexData(event.currentTarget.dataset.id);
+  },//切换顶部tab标签
   /**
    * 生命周期函数--监听页面加载
    */

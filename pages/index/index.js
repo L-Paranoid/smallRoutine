@@ -29,7 +29,7 @@ Page({
         _this.setData({
           banner:res.data.data.banner,
           channel: res.data.data.channel,
-          categoryList: res.data.data.categoryList[0],
+          categoryList: res.data.data.categoryList[0] ,
           'channel[0].id': '1005000',
           'channel[1].id': '1005001',
           'channel[2].id': '1005002',
