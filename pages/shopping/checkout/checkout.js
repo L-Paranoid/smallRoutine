@@ -48,15 +48,15 @@ Page({
       if (res.errno === 0) {
         console.log(res.data);
         that.setData({
-          checkedGoodsList: res.data.checkedGoodsList,
-          checkedAddress: res.data.checkedAddress,
-          actualPrice: res.data.actualPrice,
-          checkedCoupon: res.data.checkedCoupon,
-          couponList: res.data.couponList,
-          couponPrice: res.data.couponPrice,
-          freightPrice: res.data.freightPrice,
-          goodsTotalPrice: res.data.goodsTotalPrice,
-          orderTotalPrice: res.data.orderTotalPrice
+          checkedGoodsList: res.data.data.checkedGoodsList,
+          checkedAddress: res.data.data.checkedAddress,
+          actualPrice: res.data.data.actualPrice,
+          checkedCoupon: res.data.data.checkedCoupon,
+          couponList: res.data.data.couponList,
+          couponPrice: res.data.data.couponPrice,
+          freightPrice: res.data.data.freightPrice,
+          goodsTotalPrice: res.data.data.goodsTotalPrice,
+          orderTotalPrice: res.data.data.orderTotalPrice
         });
       }
       wx.hideLoading();
@@ -99,7 +99,7 @@ Page({
     }
     util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId }, 'POST').then(res => {
       if (res.errno === 0) {
-        const orderId = res.data.orderInfo.id;
+        const orderId = res.data.data.orderInfo.id;
         pay.payOrder(parseInt(orderId)).then(res => {
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=1&orderId=' + orderId
