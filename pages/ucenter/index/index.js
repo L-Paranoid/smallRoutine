@@ -15,6 +15,7 @@ Page({
 
     },
     onShow: function() {
+      debugger;
         this.setData({
             userInfo: app.globalData.userInfo,
         });
@@ -62,8 +63,9 @@ Page({
             return false
         }
         util.login().then((res) => {
+          debugger;
             return util.request(api.AuthLoginByWeixin, {
-                code: res,
+                code: res.code,
                 userInfo: e.detail
             }, 'POST');
         }).then((res) => {
