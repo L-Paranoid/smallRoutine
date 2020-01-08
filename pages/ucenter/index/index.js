@@ -15,6 +15,7 @@ Page({
 
     },
     onShow: function() {
+        debugger;
         this.setData({
             userInfo: app.globalData.userInfo,
         });
@@ -28,7 +29,7 @@ Page({
     },
 
     onUserInfoClick: function() {
-      debugger;
+        debugger;
         if (wx.getStorageSync('token')) {
 
         } else {
@@ -53,7 +54,7 @@ Page({
     },
 
     onWechatLogin(e) {
-      debugger;
+        debugger;
         if (e.detail.errMsg !== 'getUserInfo:ok') {
             if (e.detail.errMsg === 'getUserInfo:fail auth deny') {
                 return false
@@ -63,7 +64,7 @@ Page({
             })
             return false
         }
-      user.loginByWeixin().then((res) => {
+        user.loginByWeixin().then((res) => {
             return util.request(api.AuthLoginByWeixin, {
                 code: res.code,
                 userInfo: e.detail
@@ -78,13 +79,13 @@ Page({
             }
             // 设置用户信息
             this.setData({
-              userInfo: res.data.data.userInfo,
+                userInfo: res.data.data.userInfo,
                 showLoginDialog: false
             });
-          app.globalData.userInfo = res.data.data.userInfo;
-          app.globalData.token = res.data.data.token;
-          wx.setStorageSync('userInfo', JSON.stringify(res.data.data.userInfo));
-          wx.setStorageSync('token', res.data.data.token);
+            app.globalData.userInfo = res.data.data.userInfo;
+            app.globalData.token = res.data.data.token;
+            wx.setStorageSync('userInfo', JSON.stringify(res.data.data.userInfo));
+            wx.setStorageSync('token', res.data.data.token);
         }).catch((err) => {
             console.log(err)
         })
@@ -107,7 +108,7 @@ Page({
             confirmColor: '#b4282d',
             content: '退出登录？',
             success: function(res) {
-              if (res.data.confirm) {
+                if (res.data.confirm) {
                     wx.removeStorageSync('token');
                     wx.removeStorageSync('userInfo');
                     wx.switchTab({

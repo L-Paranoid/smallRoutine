@@ -106,7 +106,7 @@ function getUserInfo() {
             withCredentials: true,
             success: function(res) {
               //原写法 res.detail.errMsg
-                if (res.errMsg === 'getUserInfo:ok') {
+              if (res.detail.errMsg === 'getUserInfo:ok') {
                     resolve(res);
                 } else {
                     reject(res);

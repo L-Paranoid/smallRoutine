@@ -104,6 +104,7 @@ Page({
 
     //获取选中的规格信息
     getCheckedSpecValue: function() {
+      debugger;
         let checkedValues = [];
         let _specificationList = this.data.specificationList;
         for (let i = 0; i < _specificationList.length; i++) {
