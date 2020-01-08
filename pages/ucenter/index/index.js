@@ -28,6 +28,7 @@ Page({
     },
 
     onUserInfoClick: function() {
+      debugger;
         if (wx.getStorageSync('token')) {
 
         } else {
@@ -52,6 +53,7 @@ Page({
     },
 
     onWechatLogin(e) {
+      debugger;
         if (e.detail.errMsg !== 'getUserInfo:ok') {
             if (e.detail.errMsg === 'getUserInfo:fail auth deny') {
                 return false
@@ -61,9 +63,9 @@ Page({
             })
             return false
         }
-        util.login().then((res) => {
+      user.loginByWeixin().then((res) => {
             return util.request(api.AuthLoginByWeixin, {
-                code: res,
+                code: res.code,
                 userInfo: e.detail
             }, 'POST');
         }).then((res) => {

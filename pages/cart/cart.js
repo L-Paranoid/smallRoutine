@@ -215,7 +215,7 @@ Page({
     checkoutOrder: function() {
         //获取已选择的商品
         let _this = this;
-
+        debugger;
         var checkedGoods = this.data.cartGoods.filter(function(element, index, array) {
             if (element.checked == true) {
                 return true;
